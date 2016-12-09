@@ -1,0 +1,11 @@
+noremap j 7j
+noremap k 7k
+
+set gui=none
+
+set hintchars=hjklasdfgyuiopqwertnmzxcvb
+highlight Hint font-size:150%;color:white;background-color:red;padding:2px;
+
+hi CmdLine -append font-size:12px
+hi CompDesc -append font-size:12px
+hi CompResult -append font-size:12px

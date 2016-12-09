@@ -1,0 +1,41 @@
+if &compatible
+  set nocompatible
+end
+
+call plug#begin('~/.vim/bundle')
+
+" Define bundles via Github repos
+"Plug 'christoomey/vim-run-interactive'
+Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'janko-m/vim-test'
+Plug 'pbrisbin/vim-mkdir'
+"Plug 'scrooloose/syntastic'
+Plug 'tell-k/vim-autopep8'
+"Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/tComment'
+Plug 'scrooloose/nerdtree'
+" Markdown Support
+"Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
+" Snipmate Stuff
+"Plug 'MarcWeber/vim-addon-mw-utils'
+"Plug 'tomtom/tlib_vim'
+"Plug 'garbas/vim-snipmate'
+"Plug 'honza/vim-snippets'
+" tmux
+Plug 'christoomey/vim-tmux-navigator'
+" powerline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" Tab completition
+Plug 'ervandew/supertab'
+" Git
+"Plug 'tpope/vim-fugitive'
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()

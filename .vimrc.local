@@ -1,0 +1,27 @@
+" Map ctrl+n to toggle NERDTree
+map <C-n> :NERDTreeToggle<cr>
+nnoremap <C-t> :call NumberToggle()<cr>
+
+"Allow usage of mouse in iTerm
+set ttyfast
+set mouse=a
+set ttymouse=xterm2
+
+"F2 before pasting to preserve indentation
+set pastetoggle=<F2>
+
+""Ctrl+c in visual mode sends selection to clipboard
+vnoremap <C-c> "*y 
+
+" theme
+color solarized
+
+" powerline
+let g:airline_powerline_fonts = 1
+let g:airline_theme='term'
+
+" autopep
+let g:autopep8_indent_size=2
+" let g:autopep8_disable_show_diff=0
+
+

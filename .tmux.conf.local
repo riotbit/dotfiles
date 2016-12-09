@@ -1,0 +1,6 @@
+# remove escape delay
+set -s escape-time 0
+
+# history
+bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '/' history-incremental-search
