@@ -1,0 +1,24 @@
+#    background_jobs - Indicator for background jobs.
+#    battery - Current battery status.
+#    context - Your username and host, conditionalized based on $USER and SSH status.
+#    dir - Your current working directory.
+#    dir_writable - Displays a lock icon, if you do not have write permissions on the current folder.
+#    disk_usage - Disk usage of your current partition.
+#    history - The command number for the current line.
+#    ip - Shows the current IP address.
+#    public_ip - Shows your public IP address.
+#    load - Your machine's load averages.
+#    os_icon - Display a nice little icon, depending on your operating system.
+#    ram - Show free RAM.
+#    root_indicator - An indicator if the user has superuser status.
+#    status - The return code of the previous command.
+#    swap - Prints the current swap size.
+#    time - System time.
+#    vi_mode- Your prompt's Vi editing mode (NORMAL|INSERT).
+#    ssh - Indicates whether or not you are in an SSH session.
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs vi_mode ssh)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history virtualenv)
+
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true

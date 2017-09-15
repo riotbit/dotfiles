@@ -1,0 +1,26 @@
+# replace cat with ccat
+alias cat='ccat'
+
+# ls, the common ones I use a lot shortened for rapid fire usage
+alias ls='ls -G'
+alias ll='ls -GlFh'     #size,show type,human readable
+alias la='ls -GlAFh'   #long list,show almost all,show type,human readable
+alias lr='ls -GtRFh'   #sorted by date,recursive,show type,human readable
+alias ldot='ls -Gld .*'
+
+alias grep='grep --color'
+
+# Command line head / tail shortcuts
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g L="| less"
+
+# kill suspended jobs
+alias killsus='kill $(jobs -l | cut -d " " -f4)'
+
+# set neovim if installed
+if command -v nvim >/dev/null; then 
+   alias vim='nvim'
+fi
+
+

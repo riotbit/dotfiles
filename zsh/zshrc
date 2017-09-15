@@ -1,0 +1,39 @@
+export DOTDIR="${HOME}/.dotfiles/"
+
+# enable plugin manager
+source <(antibody init)
+antibody bundle <${DOTDIR}zsh//antibody_plugins.txt > ${DOTDIR}zsh/zshplugins.sh
+
+# various 
+if [[ -s "${DOTDIR}zsh/zshrc.various" ]]; then
+  source "${DOTDIR}zsh/zshrc.various"
+fi
+
+# machine specific
+if [[ -s "${DOTDIR}zsh/zshrc.${OS}" ]]; then
+  source "${DOTDIR}zsh/zshrc.${OS}"
+fi
+
+
+# theme
+if [[ -s "${DOTDIR}zsh/zshrc.theme" ]]; then
+source "${DOTDIR}zsh/zshrc.theme"
+fi
+
+# alias 
+if [[ -s "${DOTDIR}zsh/zshrc.aliases" ]]; then
+  source "${DOTDIR}zsh/zshrc.aliases"
+fi
+
+# fzf cmds
+
+if [[ -s "${DOTDIR}zsh/zshrc.fzf" ]]; then
+  source "${DOTDIR}zsh/zshrc.fzf"
+fi
+
+source "${DOTDIR}zsh/zshplugins.sh"
+
+# python
+if [[ -s "${DOTDIR}zsh/zshrc.python" ]]; then
+  source "${DOTDIR}zsh/zshrc.python"
+fi

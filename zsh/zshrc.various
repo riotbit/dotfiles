@@ -1,0 +1,20 @@
+# minimal setup
+export EDITOR="vim"
+bindkey -v
+
+# escape delay
+# 10ms for key sequences
+KEYTIMEOUT=1
+
+bindkey '^R' history-incremental-search-backward
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+
+# autojmp
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# History
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history

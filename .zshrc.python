@@ -1,4 +1,0 @@
-export WORKON_HOME=~/.virtualenvs
-unset VIRTUAL_ENV_DISABLE_PROMPT
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
-
