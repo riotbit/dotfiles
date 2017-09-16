@@ -9,4 +9,5 @@ fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+rm ~/.tmux.conf
 ln -s $DOTDIR/tmux/tmux.conf ~/.tmux.conf
