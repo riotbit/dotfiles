@@ -21,5 +21,5 @@ workon neovim3
 pip install neovim
 virtualenv_deactivate
 
-mkdir ~/.config/nvim
+mkdir -p ~/.config/nvim
 ln -s $DOTDIR/neovim/init.vim ~/.config/nvim/init.vim
