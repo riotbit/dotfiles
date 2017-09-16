@@ -11,6 +11,7 @@ echo "Install vim-plug for nvim..."
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+
 echo "Create virtualenvs for neovim (jedi plugin)..."
 mkvirtualenv -p "python2" neovim2
 workon neovim2

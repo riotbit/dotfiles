@@ -1,6 +1,0 @@
-fzf
-virtualenv
-pip
-antibody
-zsh
-ripgrep
