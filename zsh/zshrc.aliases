@@ -1,6 +1,3 @@
-# replace cat with ccat
-alias cat='ccat'
-
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias ls='ls -G'
 alias ll='ls -GlFh'     #size,show type,human readable
