@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Requirements
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     sudo apt install tmux 
