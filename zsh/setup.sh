@@ -26,6 +26,7 @@ ln -s $DOTDIR/zsh/zshrc ~/.zshrc
 
 chsh -s $(which zsh) $USER
 zsh
+source $DOTDIR/zsh/zshrc
 
 
 
