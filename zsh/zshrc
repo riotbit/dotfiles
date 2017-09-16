@@ -2,7 +2,7 @@ export DOTDIR="${HOME}/.dotfiles/"
 
 # enable plugin manager
 source <(antibody init)
-antibody bundle <${DOTDIR}zsh//antibody_plugins.txt > ${DOTDIR}zsh/zshplugins.sh
+antibody bundle <${DOTDIR}zsh/antibody_plugins.txt > ${DOTDIR}zsh/zshplugins.sh
 
 # various 
 if [[ -s "${DOTDIR}zsh/zshrc.various" ]]; then
