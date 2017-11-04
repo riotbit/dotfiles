@@ -1,10 +1,16 @@
 #!/bin/bash
 
-export DOTDIR="~/.dotdir"
+DOTDIR=${HOME}/.dotfiles
 
 # Requirements
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    sudo apt install python-pip zsh curl
+    if command -v apt >/dev/null; then 
+        sudo apt install python-pip zsh curl 
+    fi
+    
+    if command -v pacman >/dev/null; then 
+        sudo pacman -Sy python-pip zsh curl fzf python2 python2-pip
+    fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install fzf python-pip getantibody/tap/antibody zsh ripgrep 
 fi
@@ -17,16 +23,20 @@ cd /tmp/fonts
 cd ${cur_dir}
 rm -Rf fonts
 
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install --bin
+
+if command -v fzf >/dev/null; then 
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --bin
+fi
+
+sudo pip2 install virtualenv virtualenvwrapper
 
 curl -sL https://git.io/antibody | bash -s
 
-ln -s $DOTDIR/zsh/zshrc ~/.zshrc
+rm ${HOME}/.zshrc
+ln -s ${DOTDIR}/zsh/zshrc ${HOME}/.zshrc
 
 chsh -s $(which zsh) $USER
-zsh
-source $DOTDIR/zsh/zshrc
 
 
 

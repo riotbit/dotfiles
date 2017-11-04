@@ -1,4 +1,5 @@
 export DOTDIR="${HOME}/.dotfiles/"
+export LANG="en_US.UTF-8"
 
 # enable plugin manager
 source <(antibody init)

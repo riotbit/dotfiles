@@ -1,8 +1,15 @@
 #!/bin/bash
 
+export DOTDIR=${HOME}/.dotfiles
+
 # Requirements
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    sudo apt install neovim python-pip
+    if command -v apt  >/dev/null; then
+        sudo apt install neovim python-pip
+    fi
+    if command -v pacman >/dev/null; then
+        sudo pacman -Sy neovim python-pip python2-pip
+    fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install neovim python2 python3
 fi
@@ -21,5 +28,7 @@ workon neovim3
 pip install neovim
 virtualenv_deactivate
 
-mkdir -p ~/.config/nvim
-ln -s $DOTDIR/neovim/init.vim ~/.config/nvim/init.vim
+mkdir -p ${HOME}/.config/nvim
+rm ${HOME}/.config/nvim/init.vim
+ln -s $DOTDIR/neovim/init.vim ${HOME}/.config/nvim/init.vim
+nvim +PlugInstall +qall

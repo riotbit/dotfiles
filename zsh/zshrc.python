@@ -6,5 +6,5 @@ export VIRTUALENVWRAPPER_PYTHON=$(which python2)
 
 export WORKON_HOME=~/virtualenvs
 unset VIRTUAL_ENV_DISABLE_PROMPT
-source /usr/local/bin/virtualenvwrapper.sh
+source $(which virtualenvwrapper.sh)
 

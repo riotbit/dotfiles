@@ -1,4 +1,6 @@
+echo "Updating zsh plugins..."
 antibody update
-vim +PlugUpdate +qall
-vim +PlugUpgrade +qall
-echo "tmux Ctrl-a U"
+echo "Updating neovim plugins..."
+nvim +PlugUpdate +qall
+nvim +PlugUpgrade +qall
+echo "Start Tmux and press: tmux Ctrl-a U"
