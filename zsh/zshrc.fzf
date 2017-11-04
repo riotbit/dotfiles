@@ -1,5 +1,8 @@
-if ! command -v fzf >/dev/null; then 
-    echo "fzf not installed"
+if command -v fzf >/dev/null; then 
+    bindkey -M viins -s '^R' 'fh\n' 
+    bindkey -M vicmd -s '^R' 'fh\n' 
+    bindkey -M viins -s '^ ' 'fd\n' 
+    bindkey -M vicmd -s '^ ' 'fd\n' 
 fi
 
 # change default tool to ripgrep

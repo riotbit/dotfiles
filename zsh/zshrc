@@ -39,3 +39,4 @@ source "${DOTDIR}zsh/zshplugins.sh"
 if [[ -s "${DOTDIR}zsh/zshrc.python" ]]; then
   source "${DOTDIR}zsh/zshrc.python"
 fi
+

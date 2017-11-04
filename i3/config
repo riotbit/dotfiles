@@ -50,8 +50,8 @@ gaps inner 20
 # FONT #
 ########
 
-font pango:monospace 9
-set $barfont monospace 9
+font noto:monospace 10
+set $barfont monospace 10
 
 ############
 # Modifier #
@@ -71,8 +71,8 @@ bindsym $mod+Return exec termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run -i -nb \$gray -nf \$bg -sb \$gray -sf \$yellow -fn 'Monospace:style=medium:size=12'
+# start rofi 
+bindsym $mod+space exec --no-startup-id "rofi combi-modi window,run,drun,ssh -show combi -modi combi"
 
 # change focus
 bindsym $mod+h focus left
@@ -102,9 +102,6 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
 
 # switch to workspace
 bindsym $mod+1 workspace 1
