@@ -20,4 +20,14 @@ if command -v nvim >/dev/null; then
    alias vim='nvim'
 fi
 
+alias diff='vimdiff'
+
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    alias -s pdf=zathura
+    alias -s html=firefox
+    alias -s txt=vim
+    alias -s py=vim
+    alias -s md=vim
+fi
+
 

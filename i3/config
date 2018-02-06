@@ -2,40 +2,22 @@
 # THEME #
 #########
 
-## solarized
-# set $black3 #002b36
-# set $black2 #073642
-# set $black1 #586e75
-# set $black0 #657b83
-# set $white0 #839496
-# set $white1 #93a1a1
-# set $white3 #fdf6e3
-# 
-# set $yellow #b58900
-# set $orange #cb4b16
-# set $red #dc322f
-# set $magenta #d33682
-# set $violet #6c71c4
-# set $blue #268bd2
-# set $cyan #2aa198
-# set $green #859900
-
 ## Gruvbox
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $darkgray #1d2021
+set $bg #272727
+set $red #C75646
+set $green #8EB33B
+set $yellow #D0B03C
+set $blue #4E90A7
+set $purple #C8A0D1
+set $aqua #218693
+set $gray #272727
+set $darkgray #5D5D5D
 
 ##############
 # Appereance #
 ##############
 
-set $border_size 4
+set $border_size 2
 
 new_window pixel $border_size
 new_float pixel $border_size
@@ -44,14 +26,14 @@ new_float pixel $border_size
 # i3-gaps #
 ###########
 
-gaps inner 20
+gaps inner 15
 
 ########
 # FONT #
 ########
 
-font noto:monospace 10
-set $barfont monospace 10
+font noto:monospace 8
+set $barfont monospace 8
 
 ############
 # Modifier #
@@ -69,7 +51,7 @@ floating_modifier $mod
 bindsym $mod+Return exec termite 
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # start rofi 
 bindsym $mod+space exec --no-startup-id "rofi combi-modi window,run,drun,ssh -show combi -modi combi"
@@ -158,7 +140,7 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id nitrogen --restore
 
 # lock hotkey
-bindsym $mod+F2 exec "i3lock -f -c 000000"
+bindsym $mod+F2 exec "sh ${HOME}/bin/i3_lock.sh"
 
 #######################
 # Themes & Status Bar #
@@ -166,24 +148,24 @@ bindsym $mod+F2 exec "i3lock -f -c 000000"
 
 bar {
   status_command i3blocks -c ~/.config/i3/i3blocks.conf
-  tray_output primary
+  tray_output HDMI-0 
   position top
   font pango:$barfont
 
   colors {
     background $bg
     statusline $yellow
-    focused_workspace    $gray $gray $darkgray
+    focused_workspace    $white $white $darkgray
     inactive_workspace   $darkgray $darkgray $yellow
     active_workspace     $darkgray $darkgray $yellow
     urgent_workspace 	 $red $red $bg
   }
 }
 
-client.focused          $gray $gray $gray $gray $gray
+client.focused          $white $white $white $white $white
 client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
 client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-client.urgent $red $red $gray $red $red
+client.urgent           $red $red $white $red $red
 
 ###########
 # Compton #

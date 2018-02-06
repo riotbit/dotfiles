@@ -1,10 +1,3 @@
-if command -v python2 >/dev/null; then 
-    alias python='python2'
-fi
-
-export VIRTUALENVWRAPPER_PYTHON=$(which python2)
-
-export WORKON_HOME=~/virtualenvs
-unset VIRTUAL_ENV_DISABLE_PROMPT
-source $(which virtualenvwrapper.sh)
-
+export PATH="${HOME}/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
