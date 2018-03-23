@@ -16,7 +16,7 @@ alias -g L="| less"
 alias killsus='kill $(jobs -l | cut -d " " -f4)'
 
 # set neovim if installed
-if command -v nvim >/dev/null; then 
+if command -v nvim >/dev/null; then
    alias vim='nvim'
 fi
 
@@ -29,5 +29,3 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias -s py=vim
     alias -s md=vim
 fi
-
-

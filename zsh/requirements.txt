@@ -1,6 +1,6 @@
 fzf
-virtualenv
 pip
-antibody
+pyenv
 zsh
+zplug
 ripgrep

@@ -18,7 +18,7 @@
 #    ssh - Indicates whether or not you are in an SSH session.
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs vi_mode ssh)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history virtualenv)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator history virtualenv)
 
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
