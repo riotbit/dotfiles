@@ -20,5 +20,4 @@ zplug "supercrabtree/k" # pretty ls with git, filesize, and date features
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "greymd/docker-zsh-completion"
 
-zplug update
 zplug load
