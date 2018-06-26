@@ -1,2 +1,3 @@
+source ~/.zshrc
 export PATH=/usr/local/bin:$PATH:~/bin
 export PATH="${HOME}/.pyenv/bin:$PATH"
