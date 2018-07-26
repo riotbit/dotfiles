@@ -40,6 +40,7 @@ This function should only modify configuration layer settings."
      yaml
      python
      django
+     ansible
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -53,12 +54,15 @@ This function should only modify configuration layer settings."
      git
      markdown
      neotree
-     org
+     (org :variables
+          org-enable-org-journal-support t)
      docker
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil
+                     spell-checking-enable-auto-dictionary t)
      syntax-checking
      ;;version-control
      gtags
@@ -482,23 +486,26 @@ It should only modify the values of Spacemacs settings."
                 '((python :variables python-enable-yapf-format-on-save t)))
   (setq-default dotspacemacs-configuration-layers
                 '((python :variables python-backend 'anaconda)))
-  ;; Spell Check
-  (setq-default dotspacemacs-configuration-layers
-                '((spell-checking :variables spell-checking-enable-by-default nil)))
-  (setq-default dotspacemacs-configuration-layers
-                '((spell-checking :variables spell-checking-enable-auto-dictionary t)))
   ;; OSX
   (cond ((eq system-type 'darwin)
          (setq-default dotspacemacs-configuration-layers '(
                                                     (osx :variables osx-use-option-as-meta nil)))
          (setq-default mac-right-option-modifier nil)))
   ;; org mode
+  (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (setq-default org-download-screenshot-method "screencapture")
   (setq-default org-download-image-dir "~/Documents/_orgpics/")
   (setq-default org-image-actual-width (/ (display-pixel-width) 3))
   (setq-default org-enable-github-support t)
-  ;; necessary to get env vars from zsh right
-  (spacemacs/loadenv)
+  (setq-default org-journal-dir "~/Documents/journal/")
+  (setq-default org-journal-file-format "%d-%m-%Y")
+  (setq-default org-journal-date-prefix "#+TITLE: ")
+  (setq-default org-journal-date-format "%A, %B %d %Y")
+  (setq-default org-journal-time-prefix "* ")
+  (setq-default org-journal-time-format "")
+  (setq org-agenda-files (list "~/Documents/journal/todo.org"))
+  ;; disable smartparens per default
+  (remove-hook 'prog-mode-hook #'smartparens-mode)
   )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -532,7 +539,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (helm yasnippet-snippets yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dockerfile-mode docker diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (yasnippet-snippets org-brain hl-todo counsel-projectile counsel swiper ivy smartparens helm helm-core magit git-commit ghub use-package org-plus-contrib yapfify yaml-mode ws-butler with-editor winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-journal org-download org-bullets open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode dockerfile-mode docker diminish define-word cython-mode csv-mode company-web company-tern company-statistics company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode bind-key auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(spacemacs-theme-comment-bg nil t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
