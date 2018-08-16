@@ -54,8 +54,7 @@ This function should only modify configuration layer settings."
      git
      markdown
      neotree
-     (org :variables
-          org-enable-org-journal-support t)
+     (org :config org-startup-indented t)
      docker
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -233,7 +232,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro for Powerline"
-                               :size 14
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 0.8)
@@ -491,19 +490,61 @@ It should only modify the values of Spacemacs settings."
          (setq-default dotspacemacs-configuration-layers '(
                                                     (osx :variables osx-use-option-as-meta nil)))
          (setq-default mac-right-option-modifier nil)))
-  ;; org mode
+  ;; ORG MODE
+
+  ;; capture to insert mode
+  (add-hook 'org-capture-mode-hook 'evil-insert-state)
+
+  (setq org-capture-templates
+        '(("t" "Task" entry (file+headline "~/org/tasks.org" "*INBOX*")
+           "* TODO %?\n:CREATED: %U")
+          ("l" "Task with Link" entry (file+headline "~/org/tasks.org" "*INBOX*")
+           "* TODO %?\n:CREATED: %U\n\t:LINK: %x")
+          ("s" "Schedule Today" entry (file+headline "~/org/tasks.org" "*INBOX*")
+           "* TODO %?\nSCHEDULED: %t\n\t:CREATED: %U")
+          ("m" "Meeting" entry (file+headline "~/org/tasks.org" "*INBOX*")
+           "* MEETING %?\nSCHEDULED: %T\n:CREATED: %U" :time-prompt t)
+          ("n" "Note" entry (file+headline "~/org/notes.org" "*INBOX*")
+           "* %?\n:CREATED: %U")
+          ("b" "Bookmark" entry (file+headline "~/org/notes.org" "*INBOX*")
+           "* %?\n:CREATED: %U\n\t:LINK: %x")
+          ))
+
+  ;; define states
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w!)" "MEETING(m)" "|" "CANCELED(c!)" "DONE(d!)")))
+  (setq org-todo-keyword-faces
+        '(("STARTED"  . (:foreground "lightblue" :weight bold))
+          ("WAITING"  . (:foreground "orange" :weight bold))
+          ("MEETING"  . (:foreground "grey" :weight bold))
+          ("DONE"  . (:foreground "lightgreen" :weight bold))
+          ("CANCELED"  . shadow)))
+  ;; reverse logbook order
+  (setq org-log-states-order-reversed nil)
+
+  (setq-default org-log-into-drawer t)
+
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (setq-default org-download-screenshot-method "screencapture")
   (setq-default org-download-image-dir "~/Documents/_orgpics/")
   (setq-default org-image-actual-width (/ (display-pixel-width) 3))
   (setq-default org-enable-github-support t)
-  (setq-default org-journal-dir "~/Documents/journal/")
-  (setq-default org-journal-file-format "%d-%m-%Y")
-  (setq-default org-journal-date-prefix "#+TITLE: ")
-  (setq-default org-journal-date-format "%A, %B %d %Y")
-  (setq-default org-journal-time-prefix "* ")
-  (setq-default org-journal-time-format "")
-  (setq org-agenda-files (list "~/Documents/journal/todo.org"))
+
+  ;; log done time
+  (setq org-log-done 'time)
+
+  ;; agenda
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-files (list "~/org/tasks.org"))
+  ;; start in daily view
+  (setq org-agenda-span 1)
+  ;; skip done
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-skip-scheduled-if-done t)
+
+  ;; disable persist highlight after search
+  (setq-default evil-ex-search-highlight-all nil)
+
   ;; disable smartparens per default
   (remove-hook 'prog-mode-hook #'smartparens-mode)
   )
@@ -539,7 +580,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (yasnippet-snippets org-brain hl-todo counsel-projectile counsel swiper ivy smartparens helm helm-core magit git-commit ghub use-package org-plus-contrib yapfify yaml-mode ws-butler with-editor winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-journal org-download org-bullets open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode dockerfile-mode docker diminish define-word cython-mode csv-mode company-web company-tern company-statistics company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode bind-key auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (ox-gfm docker counsel ivy helm avy magit ghub org-plus-contrib yasnippet-snippets yapfify yaml-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit tablist symon swiper string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode dockerfile-mode docker-tramp diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete auto-compile ansible-doc ansible aggressive-indent ace-window ace-link ace-jump-helm-line)))
  '(spacemacs-theme-comment-bg nil t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -9,7 +9,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     fi
 
     if command -v pacman >/dev/null; then
-        sudo pacman -Sy python-pip zsh zplug curl fzf python2 python2-pip
+        yaourt -Sy python-pip zsh zplug curl fzf python2 python2-pip pyenv pyenv-virtualenv pyenv-virtualenvwrapper
     fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install fzf python-pip zplug zsh ripgrep
@@ -27,9 +27,6 @@ if command -v fzf >/dev/null; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --bin
 fi
-
-sudo pip2 install pyenv
-sudo pip3 install pyenv
 
 rm ${HOME}/.zshrc
 ln -s ${DOTDIR}/zsh/zshrc ${HOME}/.zshrc

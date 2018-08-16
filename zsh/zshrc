@@ -1,8 +1,22 @@
 export DOTDIR="${HOME}/.dotfiles/"
 export LANG="en_US.UTF-8"
+export TERM="xterm-256color"
 
 # enable plugin manager
-export ZPLUG_HOME=/usr/local/opt/zplug
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+	if command -v apt >/dev/null; then
+		export ZPLUG_HOME=/usr/local/opt/zplug
+	fi
+
+	if command -v pacman >/dev/null; then
+		export ZPLUG_HOME="${HOME}/.zplug"
+	fi
+
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+	export ZPLUG_HOME=/usr/local/opt/zplug
+
+fi
+
 source "${DOTDIR}zsh/zshrc.plugins"
 
 # various
