@@ -11,9 +11,9 @@ echo "Start Tmux and press: tmux Ctrl-a U"
 echo "Update relevant python packages"
 pyenv deactivate
 pyenv local 2.7.15
-sudo -H pip install -U pip 
-sudo -H pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory
+sudo -H pip2 install -U pip 
+sudo -H pip2 install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory python-language-server
 pyenv local 3.7.0
-sudo -H pip install -U pip 
-sudo -H pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory
+sudo -H pip3 install -U pip 
+sudo -H pip3 install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory python-language-server
 pyenv local --unset
