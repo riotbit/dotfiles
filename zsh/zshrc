@@ -2,6 +2,10 @@ export DOTDIR="${HOME}/.dotfiles/"
 export LANG="en_US.UTF-8"
 export TERM="xterm-256color"
 
+if [[ "$OSTYPE" != "linux-gnu" ]]; then
+    export PATH=$PATH:/Library/TeX/texbin
+fi
+
 # enable plugin manager
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	if command -v apt >/dev/null; then

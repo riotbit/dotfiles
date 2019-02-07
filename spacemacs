@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
      markdown
      neotree
      (org :config (setq org-startup-indented t))
+     (elfeed :variables rmh-elfeed-org-files (list "~/.newsfeeds.org"))
      docker
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -64,6 +65,8 @@ This function should only modify configuration layer settings."
                      spell-checking-enable-auto-dictionary t)
      syntax-checking
      ;;version-control
+     ;; (latex :variables latex-build-command "LaTeX")
+     latex
      gtags
      )
    ;; List of additional packages that will be installed without being
@@ -525,13 +528,17 @@ It should only modify the values of Spacemacs settings."
   (setq-default org-log-into-drawer t)
 
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-  (setq-default org-download-screenshot-method "screencapture")
+  (if (equal system-type 'darwin)
+      (setq org-download-screenshot-method "/usr/sbin/screencapture -i %s"))
   (setq-default org-download-image-dir "~/Documents/_orgpics/")
   (setq-default org-image-actual-width (/ (display-pixel-width) 3))
   (setq-default org-enable-github-support t)
 
   ;; log done time
   (setq org-log-done 'time)
+
+  ;; image size inline
+  (setq org-image-actual-width '(500))
 
   ;; agenda
   (setq org-agenda-window-setup 'current-window)
@@ -547,6 +554,7 @@ It should only modify the values of Spacemacs settings."
 
   ;; disable smartparens per default
   (remove-hook 'prog-mode-hook #'smartparens-mode)
+
   )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -580,7 +588,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (web-mode toc-org live-py-mode helm-projectile expand-region dumb-jump docker counsel-projectile counsel swiper ivy ansible ace-window anaconda-mode smartparens window-purpose helm avy projectile magit ghub pythonic org-plus-contrib yasnippet-snippets yapfify yaml-mode ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package tagedit tablist symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode imenu-list hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dotenv-mode dockerfile-mode docker-tramp diminish define-word cython-mode csv-mode company-web company-tern company-statistics company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (web-mode pyvenv orgit highlight-indentation google-translate ggtags flyspell-correct-helm eyebrowse evil-surround evil-nerd-commenter evil-magit evil-goggles eval-sexp-fu dumb-jump docker counsel-projectile auto-yasnippet auto-compile aggressive-indent ace-window anaconda-mode eldoc-eval elfeed smartparens goto-chg flycheck request avy magit-popup f spaceline powerline async yasnippet-snippets yapfify yaml-mode ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit tablist symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pytest pyenv-mode py-isort pug-mode prettier-js pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox packed overseer org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flyspell-correct flycheck-pos-tip flx-ido fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-org evil-numbers evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig dotenv-mode doom-modeline dockerfile-mode docker-tramp diminish define-word cython-mode csv-mode counsel company-web company-tern company-statistics company-auctex company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-dictionary auctex-latexmk ansible-doc ansible ace-link ace-jump-helm-line ac-ispell)))
  '(spacemacs-theme-comment-bg nil t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
