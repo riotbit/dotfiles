@@ -1,9 +1,9 @@
 # ls, the common ones I use a lot shortened for rapid fire usage
-alias ls='ls -G'
-alias ll='ls -GlFh'     #size,show type,human readable
-alias la='ls -GlAFh'   #long list,show almost all,show type,human readable
-alias lr='ls -GtRFh'   #sorted by date,recursive,show type,human readable
-alias ldot='ls -Gld .*'
+alias ls='ls -G --color'
+alias ll='ls -lFh'     #size,show type,human readable
+alias la='ls -lAFh'   #long list,show almost all,show type,human readable
+alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
+alias ldot='ls -ld .*'
 
 alias grep='grep --color'
 
@@ -22,9 +22,16 @@ fi
 
 alias diff='vimdiff'
 
+# starts one or multiple args as programs in background
+background() {
+  for ((i=2;i<=$#;i++)); do
+    ${@[1]} ${@[$i]} &> /dev/null &
+  done
+}
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    alias -s pdf=zathura
-    alias -s html=firefox
+    alias -s pdf='background okular'
+    alias -s html='background firefox'
     alias -s txt=vim
     alias -s py=vim
     alias -s md=vim

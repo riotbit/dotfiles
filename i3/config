@@ -3,15 +3,16 @@
 #########
 
 ## Gruvbox
-set $bg #272727
-set $red #C75646
-set $green #8EB33B
-set $yellow #D0B03C
-set $blue #4E90A7
-set $purple #C8A0D1
-set $aqua #218693
-set $gray #272727
-set $darkgray #5D5D5D
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+
 
 ##############
 # Appereance #
@@ -33,7 +34,7 @@ gaps inner 15
 ########
 
 font noto:monospace 8
-set $barfont monospace 8
+set $barfont noto:monospace 8
 
 ############
 # Modifier #
@@ -48,12 +49,12 @@ floating_modifier $mod
 ############
 
 # start a terminal
-bindsym $mod+Return exec termite 
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+q kill
 
-# start rofi 
+# start rofi
 bindsym $mod+space exec --no-startup-id "rofi combi-modi window,run,drun,ssh -show combi -modi combi"
 
 # change focus
@@ -148,7 +149,7 @@ bindsym $mod+F2 exec "sh ${HOME}/bin/i3_lock.sh"
 
 bar {
   status_command i3blocks -c ~/.config/i3/i3blocks.conf
-  tray_output HDMI-0 
+  tray_output HDMI-0
   position top
   font pango:$barfont
 
@@ -158,20 +159,19 @@ bar {
     focused_workspace    $white $white $darkgray
     inactive_workspace   $darkgray $darkgray $yellow
     active_workspace     $darkgray $darkgray $yellow
-    urgent_workspace 	 $red $red $bg
+    urgent_workspace   $red $red $bg
   }
 }
 
-client.focused          $white $white $white $white $white
+client.focused          $blue $blue $darkgray $purple $darkgray
 client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
 client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-client.urgent           $red $red $white $red $red
+client.urgent $red $red $white $red $red
 
 ###########
 # Compton #
 ###########
 set $compositor "compton --config ~/.compton.conf"
 
-bindsym Control+$mod+c exec --no-startup-id $compositor 
+bindsym Control+$mod+c exec --no-startup-id $compositor
 bindsym Control+$mod+k exec --no-startup-id killall compton
-
