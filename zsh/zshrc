@@ -9,14 +9,13 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 	fi
 
 	if command -v pacman >/dev/null; then
-		export ZPLUG_HOME="${HOME}/.zplug"
+		export ZPLUG_HOME=${HOME}/.zplug
 	fi
 
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+elif [[ "$OSTYPE" != "linux-gnu" ]]; then
 	export ZPLUG_HOME=/usr/local/opt/zplug
 
 fi
-
 source "${DOTDIR}zsh/zshrc.plugins"
 
 # various

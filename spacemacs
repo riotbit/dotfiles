@@ -33,7 +33,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(;;php
+   '(php
+     ;;php
      html
      javascript
      csv
@@ -65,6 +66,10 @@ This function should only modify configuration layer settings."
      syntax-checking
      ;;version-control
      gtags
+     pdf
+     latex
+     bibtex
+     semantic
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -232,7 +237,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro for Powerline"
-                               :size 13
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 0.8)
@@ -456,9 +461,9 @@ It should only modify the values of Spacemacs settings."
 (defun dotspacemacs/user-init ()
   ;; Spellchecking
   (cond ((eq system-type 'darwin)
-         (setq ispell-program-name "/usr/local/bin/ispell")))
-  (setq-default dotspacemacs-configuration-layers
-                '((spell-checking :variables ispell-program-name 'aspell)))
+         (setq ispell-program-name "/usr/local/bin/ispell"))
+        ((eq system-type 'gnu/linux)
+         (setq ispell-program-name 'aspell)))
 
   ;; OS specifics
   (cond ((eq system-type 'darwin)
@@ -469,7 +474,12 @@ It should only modify the values of Spacemacs settings."
   ;; Theme
   (custom-set-variables '(spacemacs-theme-comment-bg nil))
   (add-hook 'before-save-hook 'whitespace-cleanup)
-  ;; workaround for warning at startup
+
+  ;; Fix for M-Ret in org-mode
+  (with-eval-after-load 'org
+    (org-defkey org-mode-map [(meta return)] 'org-meta-return)
+    )
+  (setq latex-enable-auto-fill nil)
   )
 
 (defun dotspacemacs/user-config ()
@@ -545,6 +555,20 @@ It should only modify the values of Spacemacs settings."
   ;; disable persist highlight after search
   (setq-default evil-ex-search-highlight-all nil)
 
+  ;; Auctex
+  (cond
+   ((string-equal system-type "darwin")
+    (progn (setq TeX-view-program-selection '((output-pdf "Skim")))))
+   ((string-equal system-type "gnu/linux")
+    (progn (setq TeX-view-program-selection '((output-pdf "Okular"))))))
+
+  (setq TeX-source-correlate-mode t)
+  (setq TeX-source-correlate-start-server t)
+  (setq TeX-source-correlate-method 'synctex)
+  ;; auto parse bibtex
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+
   ;; disable smartparens per default
   (remove-hook 'prog-mode-hook #'smartparens-mode)
   )
@@ -580,7 +604,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (web-mode toc-org live-py-mode helm-projectile expand-region dumb-jump docker counsel-projectile counsel swiper ivy ansible ace-window anaconda-mode smartparens window-purpose helm avy projectile magit ghub pythonic org-plus-contrib yasnippet-snippets yapfify yaml-mode ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package tagedit tablist symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode imenu-list hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dotenv-mode dockerfile-mode docker-tramp diminish define-word cython-mode csv-mode company-web company-tern company-statistics company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (google-translate doom-modeline centered-cursor-mode ace-window counsel swiper flycheck company avy ivy helm helm-core visual-fill-column hydra yasnippet-snippets yapfify yaml-mode ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle slim-mode shrink-path scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pony-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el password-generator paradox overseer orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav eldoc-eval editorconfig dumb-jump drupal-mode dotenv-mode dockerfile-mode docker diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-php company-auctex company-ansible company-anaconda column-enforce-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(spacemacs-theme-comment-bg nil t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

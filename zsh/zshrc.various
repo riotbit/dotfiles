@@ -1,4 +1,3 @@
-# minimal setup
 export EDITOR="vim"
 bindkey -v
 
