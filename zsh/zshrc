@@ -1,56 +1,25 @@
-export DOTDIR="${HOME}/.dotfiles/"
-export LANG="en_US.UTF-8"
-export TERM="xterm-256color"
+### Added by Zplugin's installer
+source '/home/ckl/.zplugin/bin/zplugin.zsh'
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin's installer chunk
 
-if [[ "$OSTYPE" != "linux-gnu" ]]; then
-    export PATH=$PATH:/Library/TeX/texbin
-fi
+export DOTDIR="$
+{HOME}/.dotfiles/"
 
-# enable plugin manager
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-	if command -v apt >/dev/null; then
-		export ZPLUG_HOME=/usr/local/opt/zplug
-	fi
+# load base files
+# set vi command, load aliases...
+for f in ${DOTDIR}zsh/base/zshrc.*; do
+    [ -e "$f" ] || continue;
+    source "$f";
+done
 
-	if command -v pacman >/dev/null; then
-		export ZPLUG_HOME=${HOME}/.zplug
-	fi
-
-elif [[ "$OSTYPE" != "linux-gnu" ]]; then
-	export ZPLUG_HOME=/usr/local/opt/zplug
-
-fi
-source "${DOTDIR}zsh/zshrc.plugins"
-
-# various
-if [[ -s "${DOTDIR}zsh/zshrc.various" ]]; then
-  source "${DOTDIR}zsh/zshrc.various"
-fi
-
-# machine specific
-if [[ -s "${DOTDIR}zsh/zshrc.${OS}" ]]; then
-  source "${DOTDIR}zsh/zshrc.${OS}"
-fi
-
-# theme
-if [[ -s "${DOTDIR}zsh/zshrc.theme" ]]; then
-source "${DOTDIR}zsh/zshrc.theme"
-fi
-
-# alias
-if [[ -s "${DOTDIR}zsh/zshrc.aliases" ]]; then
-  source "${DOTDIR}zsh/zshrc.aliases"
-fi
-
-# fzf cmds
-
-if [[ -s "${DOTDIR}zsh/zshrc.fzf" ]]; then
-  source "${DOTDIR}zsh/zshrc.fzf"
-fi
-
-export TERM='xterm-256color'
-
-# python
-if [[ -s "${DOTDIR}zsh/zshrc.python" ]]; then
-  source "${DOTDIR}zsh/zshrc.python"
+# load extensions
+# if statement prevents error on empty dir
+if ! [ -z "$(ls -A ${DOTDIR}zsh/autoload/)" ]; then
+    for f in ${DOTDIR}zsh/autoload/zshrc.*
+    do
+        [ -e "$f" ] || continue;
+        source "$f";
+    done
 fi

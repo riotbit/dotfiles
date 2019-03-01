@@ -1,12 +1,14 @@
-if command -v fzf >/dev/null; then 
-    bindkey -M viins -s '^R' 'fh\n' 
-    bindkey -M vicmd -s '^R' 'fh\n' 
-    bindkey -M viins -s '^ ' 'fd\n' 
-    bindkey -M vicmd -s '^ ' 'fd\n' 
+zplugin ice from"github-rel" as"program"; zplugin load junegunn/fzf-bin
+
+if command -v fzf >/dev/null; then
+    bindkey -M viins -s '^R' 'fh\n'
+    bindkey -M vicmd -s '^R' 'fh\n'
+    bindkey -M viins -s '^ ' 'fd\n'
+    bindkey -M vicmd -s '^ ' 'fd\n'
 fi
 
 # change default tool to ripgrep
-if command -v rg >/dev/null; then 
+if command -v rg >/dev/null; then
     export FZF_DEFAULT_COMMAND='rg --files --hidden --smartcase --glob "!.git/*"'
 fi
 

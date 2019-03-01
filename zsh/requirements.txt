@@ -1,6 +1,0 @@
-fzf
-pip
-pyenv
-zsh
-zplug
-ripgrep

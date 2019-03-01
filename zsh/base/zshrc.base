@@ -1,0 +1,33 @@
+# remove prompt and all features for dump terminals (like emacs tramp mode)
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
+export LANG="en_US.UTF-8"
+export TERM="xterm-256color"
+export EDITOR="vim"
+
+bindkey -v
+
+# escape delay
+# 10ms for key sequences
+KEYTIMEOUT=1
+
+bindkey '^R' history-incremental-search-backward
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+# backspace and ^h working even after
+# returning from command mode
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+
+# History
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=${HOME}/.zsh_history

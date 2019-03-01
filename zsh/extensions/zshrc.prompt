@@ -17,6 +17,8 @@
 #    vi_mode- Your prompt's Vi editing mode (NORMAL|INSERT).
 #    ssh - Indicates whether or not you are in an SSH session.
 
+zplugin ice pick"powerlevel9k.zsh-theme"; zplugin light "bhilburn/powerlevel9k"
+
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs vi_mode ssh)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator history virtualenv)
 
