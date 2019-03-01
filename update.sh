@@ -34,16 +34,23 @@ echo "
 Python
 ================================
 "
+=======
+eval "$(pyenv init -)"
+echo "Update relevant python packages"
 pyenv deactivate
-pyenv local 2.7.15 && sudo -H pip install -U pip && sudo -H pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
-pyenv local 3.7.1 && sudo -H pip install -U pip && sudo -H pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
-pyenv local --unset
+pyenv global 2.7.15
+pip install -U pip
+pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
+pyenv global 3.7.1
+pip install -U pip
+pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
+pyenv global 3.7.1
 
 echo "
 ================================
 Zsh
 ================================
 "
-source '/home/ckl/.zplugin/bin/zplugin.zsh'
+source '${HOME}/.zplugin/bin/zplugin.zsh'
 zplugin self-update
 zplugin update
