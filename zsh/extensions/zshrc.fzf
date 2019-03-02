@@ -9,19 +9,19 @@ fi
 
 # change default tool to ripgrep
 if command -v rg >/dev/null; then
-    export FZF_DEFAULT_COMMAND='rg --files --hidden --smartcase --glob "!.git/*"'
+    export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --smartcase --glob "!.git/*"'
 fi
 
 # Another fd - cd into the selected directory
 # This one differs from the above, by only showing the sub directories and not
 #  showing the directories within those.
 fd() {
-    DIR=`find * \( -type d -o -type l \) -print 2> /dev/null | fzf ` \
+    DIR=`find * -follow \( -type d -o -type l \) -print 2> /dev/null | fzf ` \
     && cd "$DIR"
 }
 
 fda() {
-  DIR=`find . -type d -print 2> /dev/null | fzf ` \
+    DIR=`find . -follow -type d -print 2> /dev/null | fzf ` \
     && cd "$DIR"
 }
 
