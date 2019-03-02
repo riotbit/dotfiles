@@ -4,8 +4,7 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 ### End of Zplugin's installer chunk
 
-export DOTDIR="$
-{HOME}/.dotfiles/"
+export DOTDIR="${HOME}/.dotfiles/"
 
 # load base files
 # set vi command, load aliases...
