@@ -34,7 +34,6 @@ echo "
 Python
 ================================
 "
-=======
 eval "$(pyenv init -)"
 echo "Update relevant python packages"
 pyenv deactivate
