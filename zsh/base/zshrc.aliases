@@ -3,15 +3,18 @@
 alias sudo='sudo '
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias ls='gls'
+    LS_COMMAND='gls --color'
+fi
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    LS_COMMAND='ls --color'
 fi
 
 # ls, the common ones I use a lot shortened for rapid fire usage
-alias ls='ls --color'
-alias ll='ls -lFh'     #size,show type,human readable
-alias la='ls -lAFh'   #long list,show almost all,show type,human readable
-alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
-alias ldot='ls -ld .*'
+alias ll="${LS_COMMAND} -lFh"     #size,show type,human readable
+alias la="${LS_COMMAND} -lAFh"   #long list,show almost all,show type,human readable
+alias lr="${LS_COMMAND} -tRFh"   #sorted by date,recursive,show type,human readable
+alias ldot="${LS_COMMAND} -ld .*"
 
 alias grep='grep --color'
 

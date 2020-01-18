@@ -33,46 +33,26 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(php
-     ;;php
-     html
-     javascript
+   '(
      csv
      yaml
      python
-     django
-     ansible
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
-     ;; `M-m f e R' (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      helm
      auto-completion
-     ;; better-defaults
      emacs-lisp
-     ;; dash
      git
      markdown
-     neotree
-     (org :config (setq org-startup-indented t))
-     (elfeed :variables rmh-elfeed-org-files (list "~/.newsfeeds.org"))
+     treemacs
+     org
      docker
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
      (spell-checking :variables
                      spell-checking-enable-by-default nil
                      spell-checking-enable-auto-dictionary t)
      syntax-checking
-     ;;version-control
-     ;; (latex :variables latex-build-command "LaTeX")
-     latex
-     gtags
-     pdf
      latex
      bibtex
      semantic
+     osx
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -81,7 +61,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(doom-themes)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -111,10 +91,10 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
 
-   ;; File path pointing to emacs 27.1 executable compiled with support
-   ;; for the portable dumper (this is currently the branch pdumper).
-   ;; (default "emacs-27.0.50")
-   dotspacemacs-emacs-pdumper-executable-file "emacs-27.0.50"
+   ;; Name of executable file pointing to emacs 27+. This executable must be
+   ;; in your PATH.
+   ;; (default "emacs")
+   dotspacemacs-emacs-pdumper-executable-file "emacs"
 
    ;; Name of the Spacemacs dump file. This is the file will be created by the
    ;; portable dumper in the cache directory under dumps sub-directory.
@@ -220,17 +200,16 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(gruvbox
+   dotspacemacs-themes '(gruvbox-dark-hard
                          solarized-light
-                         spacemacs-dark
-                         spacemacs-light)
+                         )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
-   ;; `all-the-icons', `custom', `vim-powerline' and `vanilla'. The first three
-   ;; are spaceline themes. `vanilla' is default Emacs mode-line. `custom' is a
-   ;; user defined themes, refer to the DOCUMENTATION.org for more info on how
-   ;; to create your own spaceline theme. Value can be a symbol or list with\
-   ;; additional properties.
+   ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
+   ;; first three are spaceline themes. `doom' is the doom-emacs mode-line.
+   ;; `vanilla' is default Emacs mode-line. `custom' is a user defined themes,
+   ;; refer to the DOCUMENTATION.org for more info on how to create your own
+   ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
    dotspacemacs-mode-line-theme '(vim-powerline)
 
@@ -241,7 +220,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro for Powerline"
-                               :size 14
+                               :size 12
                                :weight normal
                                :width normal
                                :powerline-scale 0.8)
@@ -304,9 +283,9 @@ It should only modify the values of Spacemacs settings."
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
 
-   ;; If non-nil, the paste transient-state is enabled. While enabled, pressing
-   ;; `p' several times cycles through the elements in the `kill-ring'.
-   ;; (default nil)
+   ;; If non-nil, the paste transient-state is enabled. While enabled, after you
+   ;; paste something, pressing `C-j' and `C-k' several times cycles through the
+   ;; elements in the `kill-ring'. (default nil)
    dotspacemacs-enable-paste-transient-state nil
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
@@ -344,6 +323,11 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil) (Emacs 24.4+ only)
    dotspacemacs-maximized-at-startup nil
 
+   ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
+   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
+   ;; borderless fullscreen. (default nil)
+   dotspacemacs-undecorated-at-startup nil
+
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -371,10 +355,14 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smooth-scrolling t
 
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
-   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
+   ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
+   ;; numbers are relative. If set to `visual', line numbers are also relative,
+   ;; but lines are only visual lines are counted. For example, folded lines
+   ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
+   ;;   :visual nil
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
    ;;                       markdown-mode
@@ -382,6 +370,7 @@ It should only modify the values of Spacemacs settings."
    ;;                       pdf-view-mode
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
+   ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
    dotspacemacs-line-numbers nil
 
@@ -394,7 +383,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smartparens-strict-mode nil
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+   ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
 
@@ -462,6 +451,14 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-pretty-docs nil))
 
+(defun dotspacemacs/user-env ()
+  "Environment variables setup.
+This function defines the environment variables for your Emacs session. By
+default it calls `spacemacs/load-spacemacs-env' which loads the environment
+variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
+See the header of this file for more information."
+  (spacemacs/load-spacemacs-env))
+
 (defun dotspacemacs/user-init ()
   ;; Spellchecking
   (cond ((eq system-type 'darwin)
@@ -502,63 +499,72 @@ It should only modify the values of Spacemacs settings."
   ;; OSX
   (cond ((eq system-type 'darwin)
          (setq-default dotspacemacs-configuration-layers '(
-                                                    (osx :variables osx-use-option-as-meta nil)))
+                                                           (osx :variables osx-use-option-as-meta nil)))
          (setq-default mac-right-option-modifier nil)))
+
   ;; ORG MODE
 
+  (setq org-startup-indented t)
   ;; capture to insert mode
   (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
   (setq org-capture-templates
-        '(("t" "Task" entry (file+headline "~/org/tasks.org" "*INBOX*")
-           "* TODO %?\n:CREATED: %U")
-          ("l" "Task with Link" entry (file+headline "~/org/tasks.org" "*INBOX*")
-           "* TODO %?\n:CREATED: %U\n\t:LINK: %x")
-          ("s" "Schedule Today" entry (file+headline "~/org/tasks.org" "*INBOX*")
-           "* TODO %?\nSCHEDULED: %t\n\t:CREATED: %U")
-          ("m" "Meeting" entry (file+headline "~/org/tasks.org" "*INBOX*")
-           "* MEETING %?\nSCHEDULED: %T\n:CREATED: %U" :time-prompt t)
-          ("n" "Note" entry (file+headline "~/org/notes.org" "*INBOX*")
-           "* %?\n:CREATED: %U")
-          ("b" "Bookmark" entry (file+headline "~/org/notes.org" "*INBOX*")
-           "* %?\n:CREATED: %U\n\t:LINK: %x")
+        '(("t" "Todo [inbox]" entry (file+headline "~/org/inbox.org" "Tasks")
+           "* TODO %i%?\n :CREATED: %U")
+          ("T" "Tickler" entry (file+headline "~/org/tickler.org" "Tickler")
+           "* %?\n :CREATED: %U\n SCHEDULED: %T" :time-prompt t)
+          ("b" "Bookmark" entry (file+headline "~/org/inbox.org" "Bookmark")
+           "* %?\n :CREATED: %U\n\t:LINK: %x")
           ))
 
   ;; define states
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w!)" "MEETING(m)" "|" "CANCELED(c!)" "DONE(d!)")))
+        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
   (setq org-todo-keyword-faces
-        '(("STARTED"  . (:foreground "lightblue" :weight bold))
+        '(("DONE"  . (:foreground "lightgreen" :weight bold))
           ("WAITING"  . (:foreground "orange" :weight bold))
-          ("MEETING"  . (:foreground "grey" :weight bold))
-          ("DONE"  . (:foreground "lightgreen" :weight bold))
+          ("TODO"  . (:foreground "#fb4934" :weight bold))
           ("CANCELED"  . shadow)))
-  ;; reverse logbook order
-  (setq org-log-states-order-reversed nil)
 
-  (setq-default org-log-into-drawer t)
+  ;; Old todo bindings to t
+  (setq org-use-speed-commands t)
+  (setq org-want-todo-bindings t)
 
   (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (if (equal system-type 'darwin)
       (setq org-download-screenshot-method "/usr/sbin/screencapture -i %s"))
   (setq-default org-download-image-dir "~/Documents/_orgpics/")
   (setq-default org-image-actual-width (/ (display-pixel-width) 3))
-  (setq-default org-enable-github-support t)
-
-  ;; log done time
-  (setq org-log-done 'time)
 
   ;; image size inline
   (setq org-image-actual-width '(500))
 
   ;; agenda
   (setq org-agenda-window-setup 'current-window)
-  (setq org-agenda-files (list "~/org/tasks.org"))
+  (setq org-agenda-files (list "~/org/inbox.org" "~/org/gtd.org" "~/org/tickler.org"))
   ;; start in daily view
-  (setq org-agenda-span 1)
+  (setq org-agenda-span 14)
   ;; skip done
   (setq org-agenda-skip-deadline-if-done t)
-  (setq org-agenda-skip-scheduled-if-done t)
+
+
+  (setq org-refile-targets '(("~/org/gtd.org" :maxlevel . 3)
+                             ("~/org/someday.org" :level . 1)
+                             ("~/org/tickler.org" :maxlevel . 2)))
+  ;;(setq org-refile-use-outline-path 'file)
+  ;;(setq org-refile-allow-creating-parent-nodes 'confirm)
+
+  ;; org-trello
+  ;;(defun org-trello-mode-before-save-hook ()
+  ;;  (when (bound-and-true-p org-trello-mode)
+  ;;    (org-trello-sync-buffer)))
+  ;;(add-hook 'before-save-hook #'org-trello-mode-before-save-hook)
+
+  ;;(add-hook 'org-mode-hook
+  ;;          (lambda ()
+  ;;            (let ((filename (buffer-file-name (current-buffer))))
+  ;;              (when (and filename (string= "trello" (file-name-extension (file-name-base filename))))
+  ;;                (org-trello-mode)))))
 
   ;; disable persist highlight after search
   (setq-default evil-ex-search-highlight-all nil)
@@ -583,44 +589,7 @@ It should only modify the values of Spacemacs settings."
   (setq tramp-verbose 6)
 
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" default)))
- '(evil-want-Y-yank-to-eol nil)
- '(spacemacs-theme-comment-bg nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" default)))
- '(evil-want-Y-yank-to-eol nil)
- '(package-selected-packages
-   (quote
-    (elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed yasnippet-snippets yapfify yaml-mode ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pony-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el password-generator paradox overseer orgit org-ref org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc jinja2-mode indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump drupal-mode dotenv-mode doom-modeline dockerfile-mode docker diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-php company-auctex company-ansible company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(spacemacs-theme-comment-bg nil t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+
+;; move
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)

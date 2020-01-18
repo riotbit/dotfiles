@@ -37,19 +37,16 @@ Python
 eval "$(pyenv init -)"
 echo "Update relevant python packages"
 pyenv deactivate
-pyenv global 2.7.15
+pyenv global 3.7.4
 pip install -U pip
 pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
-pyenv global 3.7.1
-pip install -U pip
-pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
-pyenv global 3.7.1
+pyenv global 3.7.4
 
 echo "
 ================================
 Zsh
 ================================
 "
-source '${HOME}/.zplugin/bin/zplugin.zsh'
+source "${HOME}/.zplugin/bin/zplugin.zsh"
 zplugin self-update
 zplugin update
