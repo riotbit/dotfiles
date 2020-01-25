@@ -1,24 +1,26 @@
-### Load Env
+# Load Env
 source "${HOME}/.zshenv"
-### Added by Zplugin's installer
-source "${HOME}/.zplugin/bin/zplugin.zsh"
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-### End of Zplugin's installer chunk
+export DOTDIR="${HOME}/.dotfiles"
 
-export DOTDIR="${HOME}/.dotfiles/"
+# Added by Zplugin's installer
+# only if things are autoloaded
+if ls "${DOTDIR}/zsh/autoload/zshrc"* 1> /dev/null 2>&1; then
+    source "$HOME/.zinit/bin/zinit.zsh"
+    autoload -Uz _zinit
+    (( ${+_comps} )) && _comps[zinit]=_zinit
+fi
 
 # load base files
 # set vi command, load aliases...
-for f in ${DOTDIR}zsh/base/zshrc.*; do
+for f in ${DOTDIR}/zsh/base/zshrc.*; do
     [ -e "$f" ] || continue;
-    source "$f";
+      source "$f";
 done
 
 # load extensions
 # if statement prevents error on empty dir
-if ! [ -z "$(ls -A ${DOTDIR}zsh/autoload/)" ]; then
-    for f in ${DOTDIR}zsh/autoload/zshrc.*
+if ! [ -z "$(ls -A ${DOTDIR}/zsh/autoload/)" ]; then
+    for f in ${DOTDIR}/zsh/autoload/zshrc.*
     do
         [ -e "$f" ] || continue;
         source "$f";

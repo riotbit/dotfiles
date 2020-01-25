@@ -1,6 +1,12 @@
-zplugin ice from"github-rel" as"program"; zplugin load junegunn/fzf-bin
+if [ ! -x "$(command -v fzf)" ]; then
+    echo "fzf not installed!"
+fi
 
-if command -v fzf >/dev/null; then
+if [ ! -x "$(command -v rg)" ]; then
+    echo "ripgrep not installed!"
+fi
+
+if [ -x "$(command -v fzf)" ]; then
     bindkey -M viins -s '^R' 'fh\n'
     bindkey -M vicmd -s '^R' 'fh\n'
     bindkey -M viins -s '^ ' 'fd\n'
@@ -8,7 +14,7 @@ if command -v fzf >/dev/null; then
 fi
 
 # change default tool to ripgrep
-if command -v rg >/dev/null; then
+if [ -x "$(command -v rg)" ]; then
     export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --smartcase --glob "!.git/*"'
 fi
 

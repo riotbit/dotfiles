@@ -10,24 +10,28 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     LS_COMMAND='ls --color'
 fi
 
+if [ -x "$(command -v rg)" ]; then
+    alias grep="rg"
+fi
+
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias ll="${LS_COMMAND} -lFh"     #size,show type,human readable
 alias la="${LS_COMMAND} -lAFh"   #long list,show almost all,show type,human readable
 alias lr="${LS_COMMAND} -tRFh"   #sorted by date,recursive,show type,human readable
 alias ldot="${LS_COMMAND} -ld .*"
 
-alias grep='grep --color'
+alias grep='grep --color -i'
 
 # Command line head / tail shortcuts
 alias -g T='| tail'
-alias -g G='| grep'
 alias -g L="| less"
+alias -g G='| grep'
 
 # kill suspended jobs
 alias killsus='kill $(jobs -l | cut -d " " -f4)'
 
 # set neovim if installed
-if command -v nvim >/dev/null; then
+if [ -x "$(command -v nvim)" ]; then
    alias vim='nvim'
 fi
 
@@ -42,7 +46,7 @@ background() {
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias -s pdf='background okular'
-    alias -s html='background firefox'
+    alias -s html='background brave'
     alias -s txt=vim
     alias -s py=vim
     alias -s md=vim

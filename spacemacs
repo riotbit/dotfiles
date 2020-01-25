@@ -42,7 +42,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      markdown
-     treemacs
+     neotree
      org
      docker
      (spell-checking :variables
@@ -52,7 +52,7 @@ This function should only modify configuration layer settings."
      latex
      bibtex
      semantic
-     osx
+     xclipboard
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -587,6 +587,10 @@ See the header of this file for more information."
   (remove-hook 'prog-mode-hook #'smartparens-mode)
 
   (setq tramp-verbose 6)
+
+  ;; NeoTree
+  (setq neo-theme 'nerd)
+  (setq neo-vc-integration '(face))
 
   )
 

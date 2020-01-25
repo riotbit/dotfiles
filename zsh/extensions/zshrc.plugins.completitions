@@ -1,3 +1,2 @@
 zplugin light "zsh-users/zsh-completions"
 zplugin light "Valodim/zsh-curl-completion"
-zplugin ice from"gh-r" as"program" mv"docker* -> docker-compose" bpick"*linux*"; zplugin load docker/compose

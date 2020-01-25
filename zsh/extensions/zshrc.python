@@ -1,4 +1,6 @@
-#zplugin ce from"github" atclone"bash raw/master/bin/pyenv-installer" as"program"; zplugin load https://github.com/pyenv/pyenv-installer/
+if [ ! -x "$(command -v pyenv)" ]; then
+    echo "pyenv not ínstalled"
+fi
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
