@@ -71,6 +71,7 @@ if [ -f "${HOME}/.zinit/bin/zinit.zsh" ]; then
     source ${HOME}/.zinit/bin/zinit.zsh
     zinit self-update
     zinit update
+    zinit compile --all
 else
     echo "zinit not installed"
 fi
