@@ -54,7 +54,7 @@ if [ -x "$(command -v pyenv)" ]; then
     eval "$(pyenv init -)"
     echo "Update relevant python packages"
     pyenv deactivate
-    pyenv global 3.7.4
+    pyenv global 3.8.1
     pip install -U pip
     pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
 else
