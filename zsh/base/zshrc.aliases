@@ -6,7 +6,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     LS_COMMAND='gls --color'
 fi
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+if [[ "$OSTYPE" == "linux"* ]]; then
     LS_COMMAND='ls --color'
 fi
 
@@ -44,7 +44,7 @@ background() {
   done
 }
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "linux"* ]]; then
     alias -s pdf='background okular'
     alias -s html='background brave'
     alias -s txt=vim

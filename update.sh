@@ -55,8 +55,8 @@ if [ -x "$(command -v pyenv)" ]; then
     echo "Update relevant python packages"
     pyenv deactivate
     pyenv global 3.8.1
-    pip install -U pip
-    pip install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle
+    pip3 install -U pip
+    pip3 install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle awscli
 else
     echo "pyenv not installed"
 fi

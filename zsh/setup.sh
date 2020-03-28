@@ -3,7 +3,7 @@
 DOTDIR=${HOME}/.dotfiles
 
 # Requirements
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "linux"* ]]; then
     if command -v apt >/dev/null; then
         echo "Requirements: sudo apt install zsh curl fonts-powerline"
     fi

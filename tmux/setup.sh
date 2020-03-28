@@ -3,7 +3,7 @@
 export DOTDIR=${HOME}/.dotfiles
 
 # Requirements
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "linux"* ]]; then
     if command -v apt  >/dev/null; then 
         sudo apt install tmux 
     fi
