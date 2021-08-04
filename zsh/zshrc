@@ -9,8 +9,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Load Env
+source "${HOME}/.dotfiles_env"
 source "${HOME}/.zshenv"
-export DOTDIR="${HOME}/.dotfiles"
 
 
 # Added by Zplugin's installer
@@ -37,3 +37,4 @@ if ! [ -z "$(ls -A ${DOTDIR}/zsh/autoload/)" ]; then
         source "$f";
     done
 fi
+### End of Zinit's installer chunk

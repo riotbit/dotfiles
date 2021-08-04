@@ -35,6 +35,9 @@ if [ -x "$(command -v nvim)" ]; then
    alias vim='nvim'
 fi
 
+# emacsclient attache
+alias emacsc="emacsclient -c"
+
 alias diff='vimdiff'
 
 # starts one or multiple args as programs in background
@@ -50,4 +53,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
     alias -s txt=vim
     alias -s py=vim
     alias -s md=vim
+    alias -s m4v=vlc
+    alias -s xlsx=libreoffice 
+    alias -s docx=libreoffice 
 fi

@@ -1,5 +1,0 @@
-[style]
-based_on_style = pep8
-indent_dictionary_value=true
-split_before_first_argument=true
-split_before_logical_operator=true

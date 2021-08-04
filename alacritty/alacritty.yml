@@ -65,7 +65,7 @@ font:
     family: Hack
     style: Bold Italic
 
-  size: 10.0
+  size: $ALACRITTY_FONT_SIZE
 
 ## Colors (Gruvbox light)
 #colors:

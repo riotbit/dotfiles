@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+source "env" || exit 1
+
 if [ -x "$(command -v emacs)" ]; then
     echo "
     ================================
@@ -34,17 +36,6 @@ else
     echo "npm not installed"
 fi
 
-if [ -x "$(command -v tmux)" ]; then
-    echo "
-    ================================
-    Tmux
-    ================================
-    "
-    ${HOME}/.tmux/plugins/tpm/bin/update_plugins all
-else
-    echo "tmux not installed"
-fi
-
 if [ -x "$(command -v pyenv)" ]; then
     echo "
     ================================
@@ -54,9 +45,12 @@ if [ -x "$(command -v pyenv)" ]; then
     eval "$(pyenv init -)"
     echo "Update relevant python packages"
     pyenv deactivate
-    pyenv global 3.8.1
-    pip3 install -U pip
-    pip3 install -U jedi flake8 importmagic autopep8 yapf epc json-rpc service_factory isort pycodestyle awscli
+    pyenv global ${PYTHON_BASE_VERSION}
+    pip install -U pip pip-tools
+    pip-compile ${HOME}/.python-dev-requirements.in
+    pip install -Ur ${HOME}/.python-dev-requirements.txt
+    pyenv virtualenvs --bare | while read x; do pyenv activate $x && pip install -U pip pip-tools && pip install -Ur ~/.python-dev-requirements.txt; done
+    pyenv deactivate
 else
     echo "pyenv not installed"
 fi
@@ -74,4 +68,13 @@ if [ -f "${HOME}/.zinit/bin/zinit.zsh" ]; then
     zinit compile --all
 else
     echo "zinit not installed"
+fi
+
+if [ -d "${HOME}/.aws/cli" ]; then
+    echo "
+    ================================
+    AWS
+    ================================
+    "
+    ${HOME}/scripts/aws-cli-update.sh
 fi

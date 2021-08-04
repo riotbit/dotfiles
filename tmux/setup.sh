@@ -1,14 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
-export DOTDIR=${HOME}/.dotfiles
+source "../env"
 
 # Requirements
 if [[ "$OSTYPE" == "linux"* ]]; then
-    if command -v apt  >/dev/null; then 
-        sudo apt install tmux 
+    if command -v apt  >/dev/null; then
+        sudo apt install tmux
     fi
-    if command -v pacman >/dev/null; then 
-        sudo pacman -Sy tmux 
+    if command -v pacman >/dev/null; then
+        sudo pacman -Sy tmux
     fi
     sed -i "s/tmux\.macos\.conf/tmux\.linux\.conf/g" ${DOTDIR}/tmux/tmux.conf
 elif [[ "$OSTYPE" == "darwin"* ]]; then
