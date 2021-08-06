@@ -33,7 +33,11 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(typescript
+     html
+     php
+     nginx
+     json
      csv
      yaml
      python
@@ -200,7 +204,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(gruvbox-dark-hard
+   dotspacemacs-themes '(gruvbox
                          solarized-light
                          )
 
@@ -263,7 +267,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil then the last auto saved layouts are resumed automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts 1
+   dotspacemacs-auto-resume-layouts t
 
    ;; If non-nil, auto-generate layout name when creating new layouts. Only has
    ;; effect when using the "jump to layout by number" commands. (default nil)
@@ -272,7 +276,7 @@ It should only modify the values of Spacemacs settings."
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
-   dotspacemacs-large-file-size 1
+   dotspacemacs-large-file-size 10
 
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
@@ -493,9 +497,11 @@ See the header of this file for more information."
   (setq-default dotspacemacs-configuration-layers
                 '((python :variables python-test-runner 'pytest)))
   (setq-default dotspacemacs-configuration-layers
-                '((python :variables python-enable-yapf-format-on-save t)))
+                '((python :variables python-formatter 'lsp)))
   (setq-default dotspacemacs-configuration-layers
-                '((python :variables python-backend 'anaconda)))
+                '((python :variables python-enable-format-on-save t)))
+  (setq-default dotspacemacs-configuration-layers
+                '((python :variables python-backend 'lsp)))
   ;; OSX
   (cond ((eq system-type 'darwin)
          (setq-default dotspacemacs-configuration-layers '(
@@ -591,6 +597,10 @@ See the header of this file for more information."
   ;; NeoTree
   (setq neo-theme 'nerd)
   (setq neo-vc-integration '(face))
+
+  ;; Git
+  (setq-default git-enable-magit-svn-plugin t)
+  (setq-default git-magit-status-fullscreen t)
 
   )
 
