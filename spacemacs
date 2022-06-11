@@ -35,19 +35,21 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(typescript
      html
-     php
+     (php :variables php-backend 'lsp)
      nginx
      json
      csv
-     yaml
+     (yaml :variables yaml-enable-lsp t)
      python
+     lsp
      helm
      auto-completion
-     emacs-lisp
      git
      markdown
-     neotree
-     org
+     treemacs
+     (org :variables
+          org-enable-roam-support t
+          org-roam-v2-ack t)
      docker
      (spell-checking :variables
                      spell-checking-enable-by-default nil
@@ -501,12 +503,18 @@ See the header of this file for more information."
   (setq-default dotspacemacs-configuration-layers
                 '((python :variables python-enable-format-on-save t)))
   (setq-default dotspacemacs-configuration-layers
-                '((python :variables python-backend 'lsp)))
+                  '((python :variables python-backend 'lsp python-lsp-server 'pyright)))
   ;; OSX
   (cond ((eq system-type 'darwin)
          (setq-default dotspacemacs-configuration-layers '(
                                                            (osx :variables osx-use-option-as-meta nil)))
          (setq-default mac-right-option-modifier nil)))
+
+  ;; treemacs
+  (setq-default dotspacemacs-configuration-layers '((treemacs :variables treemacs-use-follow-mode 'tag)))
+  (setq-default dotspacemacs-configuration-layers '((treemacs :variables treemacs-use-filewatch-mode t)))
+  (setq-default dotspacemacs-configuration-layers '((treemacs :variables treemacs-use-git-mode 'deferred)))
+  (setq-default dotspacemacs-configuration-layers '((treemacs :variables treemacs-use-all-the-icons-theme t)))
 
   ;; ORG MODE
 
@@ -571,6 +579,9 @@ See the header of this file for more information."
   ;;            (let ((filename (buffer-file-name (current-buffer))))
   ;;              (when (and filename (string= "trello" (file-name-extension (file-name-base filename))))
   ;;                (org-trello-mode)))))
+
+  ;; ORG ROAM
+  (setq org-roam-directory "~/roam")
 
   ;; disable persist highlight after search
   (setq-default evil-ex-search-highlight-all nil)
