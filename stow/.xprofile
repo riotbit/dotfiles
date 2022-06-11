@@ -1,0 +1,6 @@
+picom -b &
+sxhkd &
+polybar top &
+flameshot &
+dunst &
+hsetroot -solid "#1d2021"

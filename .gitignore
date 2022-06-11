@@ -1,3 +1,4 @@
 *.python-version
 /env
 /zsh/autoload
+/stow/.config/nvim/bundle

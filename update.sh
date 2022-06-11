@@ -8,7 +8,9 @@ if [ -x "$(command -v emacs)" ]; then
     Emacs
     ================================
     "
-    cd ${HOME}/.emacs.d && git pull --rebase
+    ${HOME}/.emacs.d/bin/doom build
+    ${HOME}/.emacs.d/bin/doom upgrade
+    ${HOME}/.emacs.d/bin/doom sync
 else
     echo "emacs not installed"
 fi
@@ -36,6 +38,8 @@ else
     echo "npm not installed"
 fi
 
+source ${HOME}/.config/python/ENV
+
 if [ -x "$(command -v pyenv)" ]; then
     echo "
     ================================
@@ -47,8 +51,8 @@ if [ -x "$(command -v pyenv)" ]; then
     pyenv deactivate
     pyenv global ${PYTHON_BASE_VERSION}
     pip install -U pip pip-tools
-    pip-compile ${HOME}/.python-dev-requirements.in
-    pip install -Ur ${HOME}/.python-dev-requirements.txt
+    pip-compile ${HOME}/.config/python/python-dev-requirements.in
+    pip install -Ur ${HOME}/.config/python/python-dev-requirements.txt
     pyenv virtualenvs --bare | while read x; do pyenv activate $x && pip install -U pip pip-tools && pip install -Ur ~/.python-dev-requirements.txt; done
     pyenv deactivate
 else
@@ -76,5 +80,6 @@ if [ -d "${HOME}/.aws/cli" ]; then
     AWS
     ================================
     "
-    ${HOME}/scripts/aws-cli-update.sh
+    ${HOME}/scripts/install_aws_tools/aws_cli_upgrade.sh
+    /usr/local/bin/aws --version
 fi

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+export PYTHON_BASE_VERSION=3.8.5
