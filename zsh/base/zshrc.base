@@ -17,6 +17,8 @@ bindkey '^N' down-history
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 
+bindkey '^p' fdp
+
 # History
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST

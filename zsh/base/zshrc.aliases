@@ -48,7 +48,7 @@ background() {
 }
 
 if [[ "$OSTYPE" == "linux"* ]]; then
-    alias -s pdf='background okular'
+    alias -s pdf='background zathura'
     alias -s html='background brave'
     alias -s txt=vim
     alias -s py=vim
@@ -57,3 +57,6 @@ if [[ "$OSTYPE" == "linux"* ]]; then
     alias -s xlsx=libreoffice 
     alias -s docx=libreoffice 
 fi
+
+alias dmenu_run='dmenu_run -nb "#1d2021" -nf "#ebdbb2" -sf "#b8bb26" -sb "#1d2021" -fn "fixed:pixelsize=20"'
+alias startx='ssh-agent startx'

@@ -1,7 +1,8 @@
-export PATH=$PATH:~/bin
+export PATH=${HOME}/bin:${PATH}
 export LANG="en_US.UTF-8"
-export TERM="xterm-256color"
-export EDITOR="vim"
+export TERM="alacritty"
+export EDITOR="emacs"
+export BROWSER="firefox"
 
 if [[ "$OSTYPE" != "linux"* ]]; then
     export PATH=$PATH:/Library/TeX/texbin

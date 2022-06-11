@@ -4,3 +4,4 @@ fi
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+pyenv global system
