@@ -13,6 +13,7 @@ Notification: dunst
 ## Setup
 
 ```sh
+cd ~/dev/dotfiles
 stow -v --target=${HOME} .
 ```
 
