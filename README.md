@@ -12,6 +12,10 @@ Notification: dunst
 
 ## Setup
 
+```sh
+stow -v --target=${HOME} .
+```
+
 Execute setup.sh scripts in setup/ and .config/TOOL/setup.sh
 
 ## TODO
