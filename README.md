@@ -3,8 +3,11 @@
 config managed with gnu-stow
 
 WM: bspwm
+
 Compositor: picom
+
 Editor: emacs,neovim
+
 Notification: dunst
 
 ## Setup
