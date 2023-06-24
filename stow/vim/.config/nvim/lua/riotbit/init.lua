@@ -1,0 +1,5 @@
+require("riotbit.remap")
+require("riotbit.packer")
+require("riotbit.telescope")
+require("riotbit.colors")
+require("riotbit.treesitter")

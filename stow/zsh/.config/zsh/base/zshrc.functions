@@ -1,0 +1,75 @@
+kjob_create(){
+    CRONJOB=$(kubectl get cronjobs.batch | awk '(NR>1) {print $1}' | fzf)
+    kubectl create job --from=cronjob/${CRONJOB} ${CRONJOB}-manual
+}
+
+kjob_delete(){
+    JOB=$(kubectl get jobs.batch | awk '(NR>1) {print $1}' | fzf)
+    kubectl delete job ${JOB}
+}
+
+ft_launchProdDB(){
+    echo "Creating Dump..."
+
+    POSTGRES_DOCKER_ROOT_DIR="${HOME}/dev/farmtiger/postgres-docker-dump-init"
+
+    SPRYKER_DB_PORT=5432
+    SPRYKER_DB_USERNAME=spryker
+    SPRYKER_DB_HOST=postgres
+    SPRYKER_DB_PASSWORD=wZpN6xht1zx7TVFV
+    SPRYKER_DB_DATABASE=DE_production_zed
+
+    DUMP_COMMAND="PGPASSWORD=$SPRYKER_DB_PASSWORD pg_dump -h $SPRYKER_DB_HOST -U $SPRYKER_DB_USERNAME $SPRYKER_DB_DATABASE > /home/cklopp/$(date -u +"%y_%m_%d")_spryker_db_prod.pgdump"
+    ssh admin-prod $DUMP_COMMAND
+
+    echo "Dump created!"
+    echo "Download dump"
+    scp admin-prod:~/$(date -u +"%y_%m_%d")_spryker_db_prod.pgdump "${POSTGRES_DOCKER_ROOT_DIR}/example.dump"
+    ssh admin-prod "rm $(date -u +"%y_%m_%d")_spryker_db_prod.pgdump"
+    cd ${POSTGRES_DOCKER_ROOT_DIR}
+    docker-compose down && docker-compose build && docker-compose up
+}
+
+ft_getUnzerDump(){
+    echo "Creating Dump..."
+
+    SPRYKER_DB_PORT=5432
+    SPRYKER_DB_USERNAME=spryker
+    SPRYKER_DB_HOST=postgres
+    SPRYKER_DB_PASSWORD=wZpN6xht1zx7TVFV
+    SPRYKER_DB_DATABASE=DE_production_zed
+
+    DUMP_COMMAND="PGPASSWORD=$SPRYKER_DB_PASSWORD pg_dump -h $SPRYKER_DB_HOST -U $SPRYKER_DB_USERNAME $SPRYKER_DB_DATABASE -t spy_payment_unzer -t spy_payment_unzer_transaction_log > /home/cklopp/$(date -u +"%y_%m_%d")_spryker_db_prod_unzer.pgdump"
+    ssh admin-prod $DUMP_COMMAND
+
+    echo "Dump created!"
+    echo "Download dump"
+    scp admin-prod:~/$(date -u +"%y_%m_%d")_spryker_db_prod_unzer.pgdump "${HOME}/downloads/unzer_db.pgdump"
+    ssh admin-prod "rm $(date -u +"%y_%m_%d")_spryker_db_prod_unzer.pgdump"
+}
+
+ft_getSprykerOrderCSVs(){
+    rm -R /tmp/spryker_order_csvs/*
+    aws s3 --profile MetawaysProd cp s3://farmtiger.prod.spryker.sftp.data/xentral /tmp/spryker_order_csvs --recursive
+}
+
+backup_dir(){
+    cd $(pwd) > /dev/null
+    tar cf - .  |  zstd -T$(nproc --all) -8  > ~/archive/fast_directory_backups/$(date '+%g%m%d_%H%M%S')_$(basename $PWD).tar.zst || echo "Backup failed!"; return 1
+    echo "Backup stored!"
+    return 0
+}
+
+restore_dir(){
+    TO_RESTORE=$(find ~/archive/fast_directory_backups -iname "*.tar.zst" -exec echo '{}' \; | fzf)
+    FILENAME=$(basename -- ${TO_RESTORE})
+    unzstd ${TO_RESTORE} -o /tmp/${FILENAME%.*}
+    mkdir /tmp/${FILENAME%%.*}
+    tar -x -f /tmp/${FILENAME%.*} --directory=/tmp/${FILENAME%%.*}
+    rm /tmp/${FILENAME%.*}
+    echo "Restored to: /tmp/${FILENAME%%.*}"
+}
+
+backup_inplace(){
+    tar cf - $1 |  zstd -T$(nproc --all) -8  > $(basename $1).tar.zst
+}

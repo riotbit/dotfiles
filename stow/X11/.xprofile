@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ "$(cat /proc/sys/kernel/hostname)" = "rhodan" ]; then
+    # sleep to avoid executing xrandr to soon
+    sleep 2; xrandr --output eDP-1 --mode 2048x1152 -r 60
+fi
+# improves exec speed of sxhkd (https://github.com/baskerville/sxhkd/issues/161)
+export SXHKD_SHELL="/bin/sh"
+sxhkd &
+#${HOME}/.config/polybar/launch.sh &
+dunst &
+flameshot &
+picom -b &
+hsetroot -solid "#1d2021"
+setxkbmap -layout de -variant nodeadkeys

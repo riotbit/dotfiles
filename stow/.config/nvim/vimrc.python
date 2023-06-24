@@ -1,3 +1,0 @@
-let NERDTreeIgnore = ['\.pyc$']
-
-let workon_home = $WORKON_HOME
