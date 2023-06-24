@@ -40,33 +40,33 @@ fi
 
 source ${HOME}/.config/python/ENV
 
-if [ -x "$(command -v pyenv)" ]; then
-    echo "
-    ================================
-    Python
-    ================================
-    "
-    eval "$(pyenv init -)"
-    echo "Update relevant python packages"
-    pyenv deactivate
-    pyenv global ${PYTHON_BASE_VERSION}
-    pip install -U pip pip-tools
-    pip-compile ${HOME}/.config/python/python-dev-requirements.in
-    pip install -Ur ${HOME}/.config/python/python-dev-requirements.txt
-    pyenv virtualenvs --bare | while read x; do pyenv activate $x && pip install -U pip pip-tools && pip install -Ur ~/.python-dev-requirements.txt; done
-    pyenv deactivate
-else
-    echo "pyenv not installed"
-fi
+#if [ -x "$(command -v pyenv)" ]; then
+#    echo "
+#    ================================
+#    Python
+#    ================================
+#    "
+#    eval "$(pyenv init -)"
+#    echo "Update relevant python packages"
+#    pyenv deactivate
+#    pyenv global ${PYTHON_BASE_VERSION}
+#    pip install -U pip pip-tools
+#    pip-compile ${HOME}/.config/python/python-dev-requirements.in
+#    pip install -Ur ${HOME}/.config/python/python-dev-requirements.txt
+#    pyenv virtualenvs --bare | while read x; do pyenv activate $x && pip install -U pip pip-tools && pip install -Ur ~/.config/python/python-dev-requirements.txt; done
+#    pyenv deactivate
+#else
+#    echo "pyenv not installed"
+#fi
 
 # workaround: command -v does not work with zinit (shell function)
-if [ -f "${HOME}/.zinit/bin/zinit.zsh" ]; then
+if [ -d "${HOME}/.local/share/zinit/zinit.git/" ]; then
     echo "
     ================================
     Zinit
     ================================
     "
-    source ${HOME}/.zinit/bin/zinit.zsh
+    source ${HOME}/.local/share/zinit/zinit.git/zinit.zsh
     zinit self-update
     zinit update
     zinit compile --all
