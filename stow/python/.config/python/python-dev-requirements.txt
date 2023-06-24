@@ -7,7 +7,7 @@
 astroid==2.11.5
     # via pylint
 autoflake==1.4
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 black==22.3.0
     # via pyls-black
 click==8.1.3
@@ -17,18 +17,18 @@ click==8.1.3
 dill==0.3.5.1
     # via pylint
 epc==0.0.5
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 flake8==4.0.1
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 importmagic==0.1.7
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 isort==5.10.1
     # via
     #   pylint
     #   pyls-isort
 jedi==0.17.2
     # via
-    #   -r /home/crk/.config/python/python-dev-requirements.in
+    #   -r python-dev-requirements.in
     #   python-language-server
     #   python-lsp-server
 lazy-object-proxy==1.7.1
@@ -39,7 +39,7 @@ mccabe==0.6.1
     #   pylint
 mypy==0.961
     # via
-    #   -r /home/crk/.config/python/python-dev-requirements.in
+    #   -r python-dev-requirements.in
     #   pyls-mypy
 mypy-extensions==0.4.3
     # via
@@ -52,7 +52,7 @@ pathspec==0.9.0
 pep517==0.12.0
     # via pip-tools
 pip-tools==6.6.2
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 platformdirs==2.5.2
     # via
     #   black
@@ -68,18 +68,18 @@ pyflakes==2.4.0
     #   autoflake
     #   flake8
 pylint==2.14.1
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 pyls-black==0.4.7
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 pyls-isort==0.2.2
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 pyls-mypy==0.1.8
-    # via -r /home/crk/.config/python/python-dev-requirements.in
+    # via -r python-dev-requirements.in
 python-jsonrpc-server==0.4.0
     # via python-language-server
 python-language-server==0.36.2
     # via
-    #   -r /home/crk/.config/python/python-dev-requirements.in
+    #   -r python-dev-requirements.in
     #   pyls-black
     #   pyls-mypy
 python-lsp-jsonrpc==1.0.0
@@ -96,7 +96,7 @@ tomlkit==0.11.0
     # via pylint
 typing-extensions==4.2.0
     # via mypy
-ujson==5.3.0
+ujson==5.4.0
     # via
     #   python-jsonrpc-server
     #   python-language-server
